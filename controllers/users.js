@@ -18,5 +18,7 @@ module.exports.renderLogin = (req, res) => {
 
 module.exports.login = async (req, res, next) => {
     console.log(req.body);
+    console.log(req.session);
+    console.log(req.user);
     res.redirect('/');
 }
