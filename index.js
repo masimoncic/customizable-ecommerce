@@ -9,8 +9,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const User = require('./models/users')
+const ExpressError = require('./utils/ExpressError')
 
 const userRoutes = require('./routes/users');
+const wrapAsync = require('./utils/wrapAsync');
 
 
 const dbUrl = 'mongodb://localhost:27017/ecomm-store';
@@ -36,6 +38,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 const secret = 'tempsecret';
@@ -56,13 +59,20 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser);
-passport.deserializeUser(User.deserializeUser);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 app.use('/', userRoutes);
@@ -72,6 +82,19 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
+app.post('/', wrapAsync(async (req, res, next)=> {
+    res.send(req.body);
+}))
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Something Went Wrong'
+    res.status(statusCode).render('error', { err })
+})
 
 const port = 3000;
 app.listen(port, () => {

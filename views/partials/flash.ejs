@@ -1,0 +1,15 @@
+<% if(success && success.length) { %>
+    <div class="col-8 offset-2">
+        <div class="alert alert-success fade show" role="alert">
+            <%= success %>
+        </div>
+    </div>
+<% } %>
+
+<% if(error && error.length) { %>
+    <div class="col-8 offset-2">
+        <div class="alert alert-danger fade show" role="alert">
+            <%= error %>
+        </div>
+    </div>
+<% } %>

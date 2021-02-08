@@ -5,11 +5,22 @@ module.exports.renderRegister = (req, res) => {
 }
 
 module.exports.register = async (req, res, next) => {
-    const { email, password } = req.body;
-    const username = email;
-    const user = new User({ email, username });
-    const registeredUser = await User.register(user, password);
-    res.redirect('/');
+    try {
+        const { email, username, password } = req.body;
+        const admin = false;
+        const user = new User({ email, username, admin });
+        const registeredUser = await User.register(user, password);
+        req.login(registeredUser, err => {
+            if(err) {
+                return next(err);
+            }
+            req.flash('success', 'Successfully Signed Up')
+        })
+        res.redirect('/');
+    } catch(e) {
+        req.flash('error', e.message);
+        res.redirect('register');
+    }
 }
 
 module.exports.renderLogin = (req, res) => {
