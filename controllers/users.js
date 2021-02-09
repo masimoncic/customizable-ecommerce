@@ -33,3 +33,9 @@ module.exports.login = async (req, res, next) => {
     console.log(req.user);
     res.redirect('/');
 }
+
+module.exports.logout = async( req, res, next) => {
+    req.logout();
+    req.flash('success', 'Logged Out');
+    res.redirect('/');
+}

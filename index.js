@@ -59,13 +59,6 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    next();
-})
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -75,16 +68,26 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use('/', userRoutes);
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
+
 
 
 app.get('/', (req, res) => {
     res.render('home');
+    console.log(req.user)
 })
 
-app.post('/', wrapAsync(async (req, res, next)=> {
-    res.send(req.body);
-}))
+app.use('/', userRoutes);
+
+//app.post('/', wrapAsync(async (req, res, next)=> {
+//    res.send(req.body);
+//}))
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
