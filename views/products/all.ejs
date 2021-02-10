@@ -1,0 +1,9 @@
+<% layout('boilerplate') %>
+
+<% for(let i = products.length-1; i >= 0; i--) { %>
+    <div class="col">
+        <div class="card-body">
+            <a href="/products/<%=products[i].id%>"><%= products[i].name %></a>
+        </div>
+    </div>
+<% } %>

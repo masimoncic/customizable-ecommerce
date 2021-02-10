@@ -12,6 +12,8 @@ const User = require('./models/users')
 const ExpressError = require('./utils/ExpressError')
 
 const userRoutes = require('./routes/users');
+const adminRoutes = require('./routes/admin')
+const productRoutes = require('./routes/products')
 const wrapAsync = require('./utils/wrapAsync');
 
 
@@ -84,6 +86,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', userRoutes);
+app.use('/admin', adminRoutes);
+app.use('/products', productRoutes);
 
 //app.post('/', wrapAsync(async (req, res, next)=> {
 //    res.send(req.body);
