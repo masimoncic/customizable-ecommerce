@@ -27,14 +27,11 @@ module.exports.renderLogin = (req, res) => {
     res.render('users/login');
 }
 
-module.exports.login = async (req, res, next) => {
-    console.log(req.body);
-    console.log(req.session);
-    console.log(req.user);
+module.exports.login = async (req, res) => {
     res.redirect('/');
 }
 
-module.exports.logout = async( req, res, next) => {
+module.exports.logout = async( req, res) => {
     req.logout();
     req.flash('success', 'Logged Out');
     res.redirect('/');
