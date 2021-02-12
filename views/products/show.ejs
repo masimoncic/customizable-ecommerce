@@ -4,3 +4,20 @@
 <h6><%= product.price %></h6>
 <h6><%= product.category %></h6>
 <p><%= product.description %></p>
+
+
+<h4>Reviews</h4>
+
+
+
+
+<h5>Leave a review</h5>
+
+<form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
+    <label class="form-label" for="rating">Rating</label>
+    <input type="text" class="form-control" id="rating" name="review[rating]">
+    <label class="form-label" for="content">Review</label>
+    <textarea class="form-control" id="content" name="review[content]" rows="4" required></textarea>
+
+    <button class="btn btn-success">Submit Review</button>
+</form>
