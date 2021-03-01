@@ -4,7 +4,13 @@
 <h6><%= product.price %></h6>
 <h6><%= product.category %></h6>
 <p><%= product.description %></p>
+<% if(currentUser && currentUser.admin === true) { %>
+    <a href="<%=product.id%>/edit" class="btn btn-primary">Edit Post</a>
+    <form action="/products/<%=product.id%>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+    </form>
 
+<% } %>
 
 <h4>Reviews</h4>
 

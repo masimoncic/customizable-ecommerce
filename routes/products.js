@@ -13,6 +13,10 @@ router.get('/all', wrapAsync(products.renderAll))
 
 router.route('/:id')
     .get(wrapAsync(products.renderShow))
+    .put(isAdmin, wrapAsync(products.editProduct))
+    .delete(isAdmin, wrapAsync(products.deleteProduct))
+
+router.get('/:id/edit', wrapAsync(products.renderEdit))
 
 module.exports = router;
 
