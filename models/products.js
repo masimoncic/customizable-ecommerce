@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Review = require('./reviews');
 
 const ProductSchema = new mongoose.Schema ({
     name: String,
@@ -6,7 +7,10 @@ const ProductSchema = new mongoose.Schema ({
     category: String,
     price: Number,
     //image:
-    //reviews:
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+    }],
     //keywords:
     
 })

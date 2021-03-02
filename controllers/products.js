@@ -19,7 +19,12 @@ module.exports.createProduct = async (req, res) => {
 }
 
 module.exports.renderShow = async(req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate({
+        path: 'reviews',
+        populate: {
+            path: 'author',
+        }
+    }).populate('author');
     res.render('products/show', { product })
 }
 

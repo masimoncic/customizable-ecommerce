@@ -19,11 +19,29 @@
 
 <h5>Leave a review</h5>
 
-<form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
-    <label class="form-label" for="rating">Rating</label>
-    <input type="text" class="form-control" id="rating" name="review[rating]">
-    <label class="form-label" for="content">Review</label>
-    <textarea class="form-control" id="content" name="review[content]" rows="4" required></textarea>
 
-    <button class="btn btn-success">Submit Review</button>
-</form>
+
+<% if(currentUser) { %>
+    <form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
+        <label class="form-label" for="rating">Rating</label>
+        <input type="text" class="form-control" id="rating" name="review[rating]">
+        <label class="form-label" for="content">Review</label>
+        <textarea class="form-control" id="body" name="review[body]" rows="4" required></textarea>
+    
+        <button class="btn btn-success">Submit Review</button>
+    </form>
+
+<% } %>
+
+<%for(let review of product.reviews) { %>
+    <p>Rating: <%=review.rating%> </p>
+    <p>Review: <%=review.body%> </p>
+    <p>Author: <%=review.author.username%> </p>
+
+    <% if (currentUser && review.author.equals(currentUser._id)) { %>
+        <form action="/products/<%=product._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">DELETE</button>
+        </form>
+    <% } %>
+<% } %>
+
