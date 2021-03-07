@@ -1,47 +1,87 @@
 <% layout('boilerplate') %>
 
-<h4><%= product.name %></h4>
-<h6><%= product.price %></h6>
-<h6><%= product.category %></h6>
-<p><%= product.description %></p>
-<% if(currentUser && currentUser.admin === true) { %>
-    <a href="<%=product.id%>/edit" class="btn btn-primary">Edit Post</a>
-    <form action="/products/<%=product.id%>?_method=DELETE" method="POST">
-        <button class="btn btn-danger">Delete</button>
-    </form>
+<div class="row">
+    <div class="col-6">
+        <div id="productCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <% product.images.forEach((img, i) => { %>
+                    <div class="carousel-item <%=i === 0 ? 'active' : ''%>">
+                        <img src="<%= img.url %>" class="img-fluid" alt="">
+                    </div>
+                <% }) %>
+            </div>
+            
+            <% if(product.images.length > 1) { %>
+                <a class="carousel-control-prev" href="#productCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#productCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </a>
+                <% } %>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><%=product.name%></h5>
+                <p class="card-text"><%=product.description%></p>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    $<%=product.price%>
+                </li>
+            </ul>
 
-<% } %>
+            <% if(currentUser && currentUser.admin === true) { %>
+                <div class="card-body">
+                    <a class="card-link btn btn-primary" href="<%=product.id%>/edit">Edit Product</a>
+                    <form class="d-inline" action="/products/<%=product.id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete Product</button>
+                    </form>
+                </div>
+            <% } %>
 
-<h4>Reviews</h4>
+        </div>
+
+    </div>
+
+    <div class="col-6">
+        <h4>Reviews</h4>
 
 
 
 
-<h5>Leave a review</h5>
+        <h5>Leave a review</h5>
+        
+        
+        
+        <% if(currentUser) { %>
+            <form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
+                <label class="form-label" for="rating">Rating</label>
+                <input type="text" class="form-control" id="rating" name="review[rating]">
+                <label class="form-label" for="content">Review</label>
+                <textarea class="form-control" id="body" name="review[body]" rows="4" required></textarea>
+            
+                <button class="btn btn-success">Submit Review</button>
+            </form>
+        
+        <% } %>
+        
+        <%for(let review of product.reviews) { %>
+            <p>Rating: <%=review.rating%> </p>
+            <p>Review: <%=review.body%> </p>
+            <p>Author: <%=review.author.username%> </p>
+        
+            <% if (currentUser && review.author.equals(currentUser._id)) { %>
+                <form action="/products/<%=product._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">DELETE</button>
+                </form>
+            <% } %>
+        <% } %>
+        
+    </div>
+</div>
 
 
-
-<% if(currentUser) { %>
-    <form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
-        <label class="form-label" for="rating">Rating</label>
-        <input type="text" class="form-control" id="rating" name="review[rating]">
-        <label class="form-label" for="content">Review</label>
-        <textarea class="form-control" id="body" name="review[body]" rows="4" required></textarea>
-    
-        <button class="btn btn-success">Submit Review</button>
-    </form>
-
-<% } %>
-
-<%for(let review of product.reviews) { %>
-    <p>Rating: <%=review.rating%> </p>
-    <p>Review: <%=review.body%> </p>
-    <p>Author: <%=review.author.username%> </p>
-
-    <% if (currentUser && review.author.equals(currentUser._id)) { %>
-        <form action="/products/<%=product._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">DELETE</button>
-        </form>
-    <% } %>
-<% } %>
 

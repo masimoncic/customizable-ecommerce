@@ -12,8 +12,8 @@ module.exports.renderNew = (req, res) => {
 
 module.exports.createProduct = async (req, res) => {
     const product = new Product(req.body.product);
+    product.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     await product.save();
-    console.log(product);
     req.flash('success', 'Added Product');
     res.redirect('/admin')
 }
@@ -40,6 +40,9 @@ module.exports.renderEdit = async(req, res) => {
 module.exports.editProduct = async(req, res) => {
     const id = req.params.id;
     const product = await Product.findByIdAndUpdate(id, {...req.body.product});
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    product.images.push(...imgs);
+    product.save();
     res.redirect(`/products/${product.id}`);
 }
 

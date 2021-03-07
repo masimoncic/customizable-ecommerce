@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+  }
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -83,7 +87,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     res.render('home');
-    console.log(req.user)
+    //console.log(req.user)
 })
 
 app.use('/', userRoutes);
