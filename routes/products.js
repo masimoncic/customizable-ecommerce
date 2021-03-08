@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const passport = require('passport');
 const wrapAsync = require('../utils/wrapAsync');
-const { isAdmin } = require('../middleware')
+const { isAdmin, isLoggedIn } = require('../middleware')
 const products = require('../controllers/products')
 const multer = require("multer");
 const { storage } = require('../cloudinary/index')
@@ -20,6 +20,8 @@ router.route('/:id')
     .delete(isAdmin, wrapAsync(products.deleteProduct))
 
 router.get('/:id/edit', wrapAsync(products.renderEdit))
+
+router.post('/:id/add', wrapAsync(products.add))
 
 module.exports = router;
 

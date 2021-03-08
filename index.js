@@ -19,6 +19,7 @@ const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin')
 const productRoutes = require('./routes/products')
 const reviewRoutes = require('./routes/reviews')
+const cartRoutes = require('./routes/cart');
 const wrapAsync = require('./utils/wrapAsync');
 
 
@@ -94,6 +95,7 @@ app.use('/', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/products', productRoutes);
 app.use('/products/:id/reviews', reviewRoutes)
+app.use('/cart', cartRoutes)
 
 //app.post('/', wrapAsync(async (req, res, next)=> {
 //    res.send(req.body);

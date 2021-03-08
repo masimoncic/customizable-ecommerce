@@ -1,6 +1,8 @@
 const methodOverride = require('method-override');
-const Product = require('../models/products')
+const Product = require('../models/products');
+const User = require('../models/users');
 const { cloudinary } = require('../cloudinary');
+
 
 module.exports.renderAll = async (req, res) => {
     const products = await Product.find({});
@@ -58,4 +60,13 @@ module.exports.deleteProduct = async(req, res) => {
     await Product.findByIdAndDelete(id);
     req.flash('success', 'Deleted Product');
     res.redirect('/products/all')
+}
+
+module.exports.add = async(req, res) => {
+  const productId = req.params.id;
+  const user = await User.findById(req.user._id)
+  user.cart.push(productId)
+  await user.save();
+  req.flash('success', 'Added to shopping cart');
+  res.redirect(`/products/${productId}`)
 }

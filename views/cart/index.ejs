@@ -1,0 +1,18 @@
+<% layout('boilerplate') %>
+
+<%=items%>
+
+<% if(items.legnth < 1) { %>
+  cart empty
+<% } else { %>
+  <% for (let i = items.length-1; i >= 0; i--) { %>
+
+
+
+    <%= items[i].name %>;
+
+
+
+    
+  <% } %>
+<% } %>

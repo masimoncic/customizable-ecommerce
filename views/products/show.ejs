@@ -36,6 +36,12 @@
                 </li>
             </ul>
 
+            <div class="card-body">
+              <form class="d-inline" action="/products/<%=product.id%>/add" method="POST">
+                <button class="btn btn-success">Add to Cart</button>
+              </form>
+            </div>
+
             <% if(currentUser && currentUser.admin === true) { %>
                 <div class="card-body">
                     <a class="card-link btn btn-primary" href="<%=product.id%>/edit">Edit Product</a>

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
+const passport = require('passport');
 const wrapAsync = require('../utils/wrapAsync');
-const reviews = require('../controllers/reviews')
 const { isLoggedIn } = require('../middleware')
+const cart = require('../controllers/cart');
 
-router.post('/', isLoggedIn, wrapAsync(reviews.createReview))
+router.get('/', wrapAsync(cart.renderCart))
 
-router.delete('/:reviewId', wrapAsync(reviews.deleteReview))
 
 module.exports = router;

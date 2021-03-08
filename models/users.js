@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     admin: Boolean,
+    cart: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+  }],
 });
 
 UserSchema.plugin(passportLocalMongoose);
