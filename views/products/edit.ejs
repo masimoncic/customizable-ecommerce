@@ -18,9 +18,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="description">Description</label>
-            <textarea class="form-control" type="text" id="description" name="product[description]" value=rows="5" required>
-                <%=product.description%>
-            </textarea>
+            <input class="form-control" type="text" id="description" name="product[description]" value="<%=product.description%>" required>
         </div>
         <div class="mb-3">
             <label class="form-label" for="image">Add Images</label>
@@ -37,5 +35,6 @@
         </div>
         <div class="mb-3">
         <button class="btn btn-success">Edit Product</button>
+        </div>
     </form>
 </div>

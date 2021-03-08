@@ -7,7 +7,7 @@ const ImageSchema = new mongoose.Schema({
 });
 
 ImageSchema.virtual('thumbnail').get(function() {
-    return this.url.replace('/upload', '/upload/w_200');
+    return this.url.replace('/upload', '/upload/w_150');
 })
 
 const ProductSchema = new mongoose.Schema ({
