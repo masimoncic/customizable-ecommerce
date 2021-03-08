@@ -1,18 +1,39 @@
 <% layout('boilerplate') %>
 
-<%=items%>
-
-<% if(items.legnth < 1) { %>
-  cart empty
-<% } else { %>
-  <% for (let i = items.length-1; i >= 0; i--) { %>
 
 
+<div class="row">
+ 
+  <div class="col-8">
+    <% for(let i = cart.length-1; i >= 0; i--) { %>
 
-    <%= items[i].name %>;
+      <div class="card mb-3">
+        <div class="row">
+          <div class="col-md-4">
+            <%if(cart[i].item.images.length) {%>
+              <img class="img-fluid" alt="" src="<%=cart[i].item.images[0].thumbnail%>">
+          <% } %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <p class="card-text"><%=cart[i].item.name%></p>
+              <p class="card-text">$<%=cart[i].item.price%></p>
+              <p class="card-text">quantity: <%=cart[i].quantity%></p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="/cart/<%=cart[i].item._id%>/remove?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Remove from cart</button>
+          </form> 
+        </div>
+      </div>
+    <% } %>
+  </div>
 
+  <div class="col-4">
+    total
+  </div>
 
+</div>
 
-    
-  <% } %>
-<% } %>

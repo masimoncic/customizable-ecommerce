@@ -65,7 +65,11 @@ module.exports.deleteProduct = async(req, res) => {
 module.exports.add = async(req, res) => {
   const productId = req.params.id;
   const user = await User.findById(req.user._id)
-  user.cart.push(productId)
+  cartItem = {
+    item: productId,
+    quantity: 1,
+  }
+  user.cart.push(cartItem)
   await user.save();
   req.flash('success', 'Added to shopping cart');
   res.redirect(`/products/${productId}`)
