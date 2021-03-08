@@ -6,6 +6,10 @@ const ImageSchema = new mongoose.Schema({
     filename: String,
 });
 
+ImageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/w_200');
+})
+
 const ProductSchema = new mongoose.Schema ({
     name: String,
     description: String,

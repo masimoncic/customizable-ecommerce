@@ -1,5 +1,6 @@
 const methodOverride = require('method-override');
 const Product = require('../models/products')
+const { cloudinary } = require('../cloudinary');
 
 module.exports.renderAll = async (req, res) => {
     const products = await Product.find({});
@@ -43,6 +44,12 @@ module.exports.editProduct = async(req, res) => {
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     product.images.push(...imgs);
     product.save();
+    if(req.body.deleteImages) {
+        for(let filename of req.body.deleteImages){
+          await cloudinary.uploader.destroy(filename);
+        }
+        await product.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}})
+      }
     res.redirect(`/products/${product.id}`);
 }
 
