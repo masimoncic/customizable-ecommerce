@@ -7,5 +7,6 @@ const cart = require('../controllers/cart');
 
 router.get('/', wrapAsync(cart.renderCart))
 
+router.delete('/:id/remove', wrapAsync(cart.removeItem))
 
 module.exports = router;

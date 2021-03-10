@@ -23,8 +23,8 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="/cart/<%=cart[i].item._id%>/remove?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Remove from cart</button>
+          <form action="/cart/<%=cart[i]._id%>/remove?_method=DELETE" method="POST">
+            <button name="remove-item" value="<%=cart[i]._id%>" class="btn btn-danger">Remove from cart</button>
           </form> 
         </div>
       </div>
