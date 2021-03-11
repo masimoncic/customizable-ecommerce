@@ -1,6 +1,7 @@
 const methodOverride = require('method-override');
 const Product = require('../models/products');
 const User = require('../models/users');
+const AdminSettings = require('../models/adminSettings');
 const { cloudinary } = require('../cloudinary');
 
 
@@ -73,4 +74,15 @@ module.exports.add = async(req, res) => {
   await user.save();
   req.flash('success', 'Added to shopping cart');
   res.redirect(`/products/${productId}`)
+}
+
+module.exports.renderBrowse = async(req, res) => {
+  res.render('products/browse')
+}
+
+module.exports.renderBrowseCategory = async(req, res) => {
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  const categories = adminSettings.categories;
+  //const products = await Product.find({category : })
+  res.render('products/browseCategory')
 }

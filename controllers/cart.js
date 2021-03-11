@@ -41,14 +41,9 @@ module.exports.renderCart = async(req, res) => {
 }
 
 module.exports.removeItem = async(req, res) => {
-  //to do:
   const user = await User.findById(req.user._id).populate('cart');
   const itemId = req.body.removeItem;
-  console.log(req.body);
   cart = user.cart;
-  console.log(cart);
-  console.log(itemId);
-  //console.log(req.body)
   await cart.pull({ _id: itemId })
   await user.save();
   res.redirect('/')

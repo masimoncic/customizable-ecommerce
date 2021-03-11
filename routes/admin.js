@@ -20,5 +20,6 @@ router.route('/images')
 router.route('/contact')
   .get(isAdmin, wrapAsync(admin.renderContact))
 
+router.delete('/categories/:category', isAdmin, wrapAsync(admin.deleteCategory))
 
 module.exports = router;

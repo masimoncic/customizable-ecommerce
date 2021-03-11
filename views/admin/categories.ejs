@@ -2,9 +2,15 @@
 
 <h1 class="text-center">Categories</h1>
 
-<p><%=categories%></p>
+
 
 <div class="col-8 offset-2">
+  <% for(let i = 0; i < categories.length; i++) {%>
+    <p><%=categories[i]%></p>
+    <form action="/admin/categories/<%=categories[i]%>?_method=DELETE" method="POST">
+      <button class="btn btn-danger mb-5">Delete</button> 
+    </form>
+<% } %>
   <form action="/admin/categories" method="POST" novalidate class="needs-validation">
     <div class="mb-3">
       <label class="form-label" for="newCategory">Add Category</label>

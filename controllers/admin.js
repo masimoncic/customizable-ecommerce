@@ -1,5 +1,5 @@
 const AdminSettings = require('../models/adminSettings');
-
+const methodOverride = require('method-override');
 
 
 module.exports.renderHome = async (req, res) => {
@@ -20,6 +20,15 @@ module.exports.addCategory = async(req, res) => {
   adminSettings.categories.push(newCategory);
   await adminSettings.save();
   res.redirect('categories')
+}
+
+module.exports.deleteCategory = async(req, res) => {
+  console.log(req.params);
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  const { category }= req.params;
+  await adminSettings.categories.pull(category)
+  await adminSettings.save();
+  res.redirect('/admin/categories')
 }
 
 module.exports.renderTitle = async(req, res) => {
