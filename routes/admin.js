@@ -7,5 +7,18 @@ const admin = require('../controllers/admin')
 
 router.get('/', isAdmin, admin.renderHome)
 
+router.route('/categories')
+  .get(isAdmin, wrapAsync(admin.renderCategories))
+  .post(isAdmin, wrapAsync(admin.addCategory))
+
+router.route('/title')
+  .get(isAdmin, wrapAsync(admin.renderTitle))
+
+router.route('/images')
+  .get(isAdmin, wrapAsync(admin.renderImages))
+
+router.route('/contact')
+  .get(isAdmin, wrapAsync(admin.renderContact))
+
 
 module.exports = router;

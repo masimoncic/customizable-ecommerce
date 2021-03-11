@@ -1,0 +1,16 @@
+<% layout('boilerplate') %>
+
+<h1 class="text-center">Categories</h1>
+
+<p><%=categories%></p>
+
+<div class="col-8 offset-2">
+  <form action="/admin/categories" method="POST" novalidate class="needs-validation">
+    <div class="mb-3">
+      <label class="form-label" for="newCategory">Add Category</label>
+      <input class="form-control mb-3" type="text" id="newCategory" name="newCategory">
+      <button class="btn btn-success mb-3">Submit</button>
+    </div>
+  </form>
+</div>
+

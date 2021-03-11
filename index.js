@@ -38,6 +38,8 @@ db.on('open', () => {
     console.log('Database connected');
 })
 
+
+
 const app = express();
 
 app.engine('ejs', ejsMate);
@@ -91,6 +93,7 @@ app.get('/', (req, res) => {
     //console.log(req.user)
 })
 
+
 app.use('/', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/products', productRoutes);
@@ -115,3 +118,17 @@ const port = 3000;
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
+
+
+//initialize adminSettings
+/*
+
+const AdminSetting = require('./models/adminSettings');
+const settingsConfig = {
+  name: 'adminSettings',
+  siteName: 'Placeholder',
+  categories: [],
+}
+
+adminSettings = new AdminSetting(settingsConfig);
+*/
