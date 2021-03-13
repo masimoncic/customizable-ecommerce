@@ -1,3 +1,9 @@
 <% layout('boilerplate') %>
 
-browse
+<h1>Browse by category</h1>
+
+<%for (category of categories) { %>
+  <div>
+    <a href="/products/browse/<%=category%>"><%=category%></a>
+  </div>
+<% } %>

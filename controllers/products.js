@@ -77,12 +77,15 @@ module.exports.add = async(req, res) => {
 }
 
 module.exports.renderBrowse = async(req, res) => {
-  res.render('products/browse')
+  const { categories } = await AdminSettings.findOne({ 'name' : 'adminSettings' });
+  console.log(categories)
+  res.render('products/browse', { categories })
 }
 
 module.exports.renderBrowseCategory = async(req, res) => {
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
-  const categories = adminSettings.categories;
-  //const products = await Product.find({category : })
-  res.render('products/browseCategory')
+  const { category } = req.params;
+  const products = await Product.find({'category': category})
+  //console.log(products)
+  res.render('products/browseCategory', {category, products })
 }
