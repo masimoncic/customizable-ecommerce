@@ -13,12 +13,14 @@ router.route('/categories')
 
 router.route('/title')
   .get(isAdmin, wrapAsync(admin.renderTitle))
+  .put(isAdmin, wrapAsync(admin.changeTitle))
 
 router.route('/images')
   .get(isAdmin, wrapAsync(admin.renderImages))
 
 router.route('/contact')
   .get(isAdmin, wrapAsync(admin.renderContact))
+  .put(isAdmin, wrapAsync(admin.updateContact))
 
 router.delete('/categories/:category', isAdmin, wrapAsync(admin.deleteCategory))
 

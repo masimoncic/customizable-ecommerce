@@ -7,6 +7,7 @@ const AdminSettingSchema = new mongoose.Schema({
     type: String,
   }],
   backgroundImage: String,
+  //contact:
 })
 
 module.exports = mongoose.model('AdminSetting', AdminSettingSchema);

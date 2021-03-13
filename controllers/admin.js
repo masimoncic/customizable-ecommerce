@@ -35,10 +35,22 @@ module.exports.renderTitle = async(req, res) => {
   res.render('admin/title')
 }
 
+module.exports.changeTitle = async(req, res) => {
+  const { title } = req.body;
+  const adminSettings = await AdminSettings.findOneAndUpdate({ 'name' : 'adminSettings' }, {'siteName' : title })
+  adminSettings.siteName = title;
+  res.redirect('/admin/title');
+}
+
 module.exports.renderImages = async(req, res) => {
   res.render('admin/images')
 }
 
 module.exports.renderContact = async(req, res) => {
   res.render('admin/contact');
+}
+
+module.exports.updateContact = async(req, res) => {
+  console.log('a');
+  res.redirect('/admin/contact');
 }
