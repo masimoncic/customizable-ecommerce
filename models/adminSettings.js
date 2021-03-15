@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//const ContactSchema = new mongoose.Schema({})
+
 const AdminSettingSchema = new mongoose.Schema({
   name: String,
   siteName : String,
@@ -7,7 +9,11 @@ const AdminSettingSchema = new mongoose.Schema({
     type: String,
   }],
   backgroundImage: String,
-  //contact:
+  contact: {
+    adminName: String,
+    email: String,
+    phoneNumber: String,
+  }
 })
 
 module.exports = mongoose.model('AdminSetting', AdminSettingSchema);

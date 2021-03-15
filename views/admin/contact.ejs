@@ -2,17 +2,18 @@
 
 <h1>Contact</h1>
 
-<form action="/admin/contact?_mehtod=PUT">
+<form action="/admin/contact?_method=PUT" method="POST">
   <div class="mb-3">
     <label for="name" class="form-label">Name</label>
-    <input class="form-control" type="text" name="name">
+    <input class="form-control" type="text" name="adminName" value="<%=adminSettings.contact.adminName%>">
   </div>
   <div class="mb-3">
-    <label for="Phone Number" class="form-label">Email</label>
-    <input class="form-control" type="text" Email="Email">
+    <label for="email" class="form-label">Email</label>
+    <input class="form-control" type="text" name="email" value="<%=adminSettings.contact.email%>">
   </div>
   <div class="mb-3">
-    <label for="Phone Number" class="form-label">Phone Number</label>
-    <input class="form-control" type="text" Phone Number="Phone Number">
+    <label for="phoneNumber" class="form-label">Phone Number</label>
+    <input class="form-control" type="text" name="phoneNumber" value="<%=adminSettings.contact.phoneNumber%>">
   </div>
+  <button class="btn btn-primary">Submit</button>
 </form>

@@ -32,7 +32,8 @@ module.exports.deleteCategory = async(req, res) => {
 }
 
 module.exports.renderTitle = async(req, res) => {
-  res.render('admin/title')
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  res.render('admin/title', { adminSettings })
 }
 
 module.exports.changeTitle = async(req, res) => {
@@ -47,10 +48,18 @@ module.exports.renderImages = async(req, res) => {
 }
 
 module.exports.renderContact = async(req, res) => {
-  res.render('admin/contact');
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  res.render('admin/contact', { adminSettings });
 }
 
 module.exports.updateContact = async(req, res) => {
   console.log('a');
+  const { adminName, email, phoneNumber} = req.body;
+  console.log(adminName, email, phoneNumber);
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  adminSettings.contact.adminName = adminName;
+  adminSettings.contact.email = email;
+  adminSettings.contact.phoneNumber = phoneNumber;
+  await adminSettings.save();
   res.redirect('/admin/contact');
 }

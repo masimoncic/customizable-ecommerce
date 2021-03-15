@@ -23,6 +23,7 @@ const cartRoutes = require('./routes/cart');
 const wrapAsync = require('./utils/wrapAsync');
 
 
+
 const dbUrl = 'mongodb://localhost:27017/ecomm-store';
 
 mongoose.connect(dbUrl, {
@@ -78,6 +79,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
+
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
@@ -122,13 +124,26 @@ app.listen(port, () => {
 
 //initialize adminSettings
 /*
-
 const AdminSetting = require('./models/adminSettings');
-const settingsConfig = {
-  name: 'adminSettings',
-  siteName: 'Placeholder',
-  categories: [],
+
+const initializeAdminSettings = async(req, res) => {
+  await AdminSetting.findOneAndDelete({ 'name' : 'adminSettings' })
+  const settingsConfig = {
+    name: 'adminSettings',
+    siteName: 'Placeholder',
+    categories: [],
+    contact: {
+      adminName: 'testAdminName',
+      email: 'testEmail',
+      phoneNumber: 'testPhoneNumber',
+    }
+  }
+  adminSettings = new AdminSetting(settingsConfig);
+  await adminSettings.save();
+  
 }
 
-adminSettings = new AdminSetting(settingsConfig);
+initializeAdminSettings();
+
+
 */
