@@ -13,7 +13,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const User = require('./models/users')
+const AdminSettings = require('./models/adminSettings');
 const ExpressError = require('./utils/ExpressError')
+
 
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin')
@@ -79,6 +81,22 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
+const getAdminSettings= async(req, res) => {
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' });
+  return adminSettings;
+}
+
+
+app.use(async(req, res, next) => {
+  try{
+    const adminSettings = await getAdminSettings();
+    res.locals.siteNameLocal = adminSettings.siteName;
+    res.locals.contactLocal = adminSettings.contact;
+    next();
+  } catch(err) {
+    next(err);
+  }
+})
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
