@@ -4,7 +4,6 @@ const methodOverride = require('method-override');
 
 module.exports.renderHome = async (req, res) => {
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
-  console.log(adminSettings);
     res.render('admin/home');
 
 }
@@ -53,9 +52,7 @@ module.exports.renderContact = async(req, res) => {
 }
 
 module.exports.updateContact = async(req, res) => {
-  console.log('a');
   const { adminName, email, phoneNumber} = req.body;
-  console.log(adminName, email, phoneNumber);
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
   adminSettings.contact.adminName = adminName;
   adminSettings.contact.email = email;
