@@ -2,8 +2,8 @@
 
 <h1>Title</h1>
 
-<form action="/admin/title?_method=PUT" method="POST">
+<form action="/admin/title?_method=PUT" method="POST" novalidate class="needs-validation">
   <label for="title" class="form-label">Enter new title</label>
-  <input type="text" name="title" id="title" class="form-control" value="<%=adminSettings.siteName%>">
+  <input type="text" name="title" id="title" class="form-control" value="<%=adminSettings.siteName%>" required>
   <button class="btn btn-primary">Submit</button>
 </form>

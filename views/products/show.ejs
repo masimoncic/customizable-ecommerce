@@ -56,37 +56,49 @@
     </div>
 
     <div class="col-6">
+      <div class="mb-4">
         <h4>Reviews</h4>
-
-
-
+      </div>
+        <div class="mb-4">
+          <% if (avg < 1) { %>
+            <h6>No reviews</h6>
+          <% } else {%>
+            <h6>Average rating: <%=avg%> </h6>
+          <% } %>
+        </div>
 
         <h5>Leave a review</h5>
-        
-        
         
         <% if(currentUser) { %>
             <form action="/products/<%= product.id %>/reviews" method="POST" class="needs-validation" novalidate>
                 <label class="form-label" for="rating">Rating</label>
-                <input type="text" class="form-control" id="rating" name="review[rating]">
-                <label class="form-label" for="content">Review</label>
-                <textarea class="form-control" id="body" name="review[body]" rows="4" required></textarea>
-            
-                <button class="btn btn-success">Submit Review</button>
+                <input class="form-range" type="range" min="1" max="5" id="rating" name="review[rating]" required>
+                <label class="form-label" for="content">Review:</label>
+                <div class="mb-3">
+                  <textarea class="form-control" id="body" name="review[body]" rows="4" required></textarea>
+                </div>
+                <div class="mb-4">
+                  <button class="btn btn-success">Submit Review</button>
+                </div>
             </form>
         
         <% } %>
         
         <%for(let review of product.reviews) { %>
-            <p>Rating: <%=review.rating%> </p>
-            <p>Review: <%=review.body%> </p>
-            <p>Author: <%=review.author.username%> </p>
-        
-            <% if (currentUser && review.author.equals(currentUser._id)) { %>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title"><%=review.author.username%></h5>
+              <p class="card-text">Rating: <%=review.rating%></p>
+              <p class="card-text"><%=review.body%></p>
+              <% if (currentUser && review.author.equals(currentUser._id)) { %>
                 <form action="/products/<%=product._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">DELETE</button>
                 </form>
-            <% } %>
+              <% } %>
+            </div>
+          </div>
+
         <% } %>
         
     </div>

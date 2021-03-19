@@ -5,7 +5,7 @@ const wrapAsync = require('../utils/wrapAsync');
 const { isLoggedIn } = require('../middleware')
 const cart = require('../controllers/cart');
 
-router.get('/', wrapAsync(cart.renderCart))
+router.get('/', isLoggedIn, wrapAsync(cart.renderCart))
 
 router.delete('/:id/remove', wrapAsync(cart.removeItem))
 

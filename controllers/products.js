@@ -29,7 +29,19 @@ module.exports.renderShow = async(req, res) => {
             path: 'author',
         }
     }).populate('author');
-    res.render('products/show', { product })
+    //get average review score
+    let avg = 0;
+    if (product.reviews.length > 0) {
+      console.log(product.reviews)
+      let sum = 0;
+      for (i = 0; i < product.reviews.length; i++) {
+        console.log(product.reviews[i])
+        sum += product.reviews[i].rating;
+      };
+      avg = sum / product.reviews.length;
+    }
+
+    res.render('products/show', { product, avg })
 }
 
 module.exports.renderEdit = async(req, res) => {
