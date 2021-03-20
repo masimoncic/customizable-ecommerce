@@ -9,6 +9,7 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Joi = require('joi');
@@ -25,12 +26,12 @@ const adminRoutes = require('./routes/admin')
 const productRoutes = require('./routes/products')
 const reviewRoutes = require('./routes/reviews')
 const cartRoutes = require('./routes/cart');
-const wrapAsync = require('./utils/wrapAsync');
 
 
 
-const dbUrl = 'mongodb://localhost:27017/ecomm-store';
 
+
+const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/ecomm-store'; 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -58,10 +59,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(mongoSanitize);
 
 
-const secret = 'tempsecret';
+const secret = process.env.SECRET || 'devsecret';
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  secret: secret,
+  touchAfter: 24 * 3600,
+})
 
 const sessionConfig = {
-    //store
+    store: store,
     secret: secret,
     resave: false,
     saveUninitialized: true,
@@ -167,6 +174,5 @@ const initializeAdminSettings = async(req, res) => {
 }
 
 initializeAdminSettings();
-
 
 */
