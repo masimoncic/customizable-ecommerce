@@ -1,9 +1,12 @@
 <% layout('boilerplate') %>
 
-<h1>Title</h1>
+<h1 class="text-center">Set website name</h1>
 
-<form action="/admin/title?_method=PUT" method="POST" novalidate class="needs-validation">
-  <label for="title" class="form-label">Enter new title</label>
-  <input type="text" name="title" id="title" class="form-control" value="<%=adminSettings.siteName%>" required>
-  <button class="btn btn-primary">Submit</button>
-</form>
+<div class="mt-5 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+  <form action="/admin/title?_method=PUT" method="POST" novalidate class="needs-validation">
+    <label for="title" class="form-label">Enter new title</label>
+    <input type="text" name="title" id="title" class="form-control" value="<%=adminSettings.siteName%>" required>
+    <button class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
+

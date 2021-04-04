@@ -8,12 +8,20 @@ const AdminSettingSchema = new mongoose.Schema({
   categories: [{
     type: String,
   }],
-  backgroundImage: String,
+  //backgroundImage: String,
   contact: {
     adminName: String,
     email: String,
     phoneNumber: String,
-  }
+  },
+  homePage: {
+    heading: String,
+    description: String,
+    backgroundImage: String,
+  },
+  tax: Number,
+  shippingFlat: Number,
+  shippingPercent: Number,
 })
 
 module.exports = mongoose.model('AdminSetting', AdminSettingSchema);

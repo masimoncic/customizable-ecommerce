@@ -1,4 +1,5 @@
 if(process.env.NODE_ENV !== "production") {
+  console.log('not production');
     require('dotenv').config();
   }
 
@@ -30,8 +31,8 @@ const cartRoutes = require('./routes/cart');
 
 
 
-
-const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/ecomm-store'; 
+//process.env.DB_URL 
+const dbUrl = 'mongodb://localhost:27017/ecomm-store'; 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -76,7 +77,7 @@ const sessionConfig = {
         httpOnly: true,
         //secure: true,
         expires: Date.now() + 1000 * 3600 * 7 * 24,
-        maxAge: Date.now() + 1000 * 3600 * 7 * 24,
+        maxAge: 1000 * 3600 * 7 * 24,
     }
 }
 
@@ -120,9 +121,11 @@ app.use(async(req, res, next) => {
 })
 
 
-app.get('/', (req, res) => {
-    res.render('home');
-    //console.log(req.user)
+app.get('/', async (req, res) => {
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  const homePage = adminSettings.homePage;
+  res.render('home', { homePage });
+  //console.log(req.user)
 })
 
 
@@ -166,10 +169,20 @@ const initializeAdminSettings = async(req, res) => {
       adminName: 'testAdminName',
       email: 'testEmail',
       phoneNumber: 'testPhoneNumber',
-    }
+    },
+    homePage: {
+      heading: 'placeholder',
+      description: 'placeholder',
+      backgroundImage: 'placeholder',
+    },
+    tax: 0,
+    shippingFlat: 0,
+    shippingPercent: 0,
+    
   }
   adminSettings = new AdminSetting(settingsConfig);
   await adminSettings.save();
+  console.log(adminSettings);
   
 }
 

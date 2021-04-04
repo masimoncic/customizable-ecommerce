@@ -4,7 +4,7 @@
 
 
 
-<div class="col-8 offset-2">
+<div class="mt-5 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
   <% for(let i = 0; i < categories.length; i++) {%>
     <p><%=categories[i]%></p>
     <form action="/admin/categories/<%=categories[i]%>?_method=DELETE" method="POST">

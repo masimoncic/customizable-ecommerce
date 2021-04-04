@@ -22,7 +22,6 @@ module.exports.addCategory = async(req, res) => {
 }
 
 module.exports.deleteCategory = async(req, res) => {
-  console.log(req.params);
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
   const { category }= req.params;
   await adminSettings.categories.pull(category)
@@ -42,8 +41,10 @@ module.exports.changeTitle = async(req, res) => {
   res.redirect('/admin/title');
 }
 
-module.exports.renderImages = async(req, res) => {
-  res.render('admin/images')
+module.exports.renderConfigHome = async(req, res) => {
+  const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
+  const homePage = adminSettings.homePage;
+  res.render('admin/configHome', { homePage })
 }
 
 module.exports.renderContact = async(req, res) => {

@@ -15,8 +15,8 @@ router.route('/title')
   .get(isAdmin, wrapAsync(admin.renderTitle))
   .put(isAdmin, wrapAsync(admin.changeTitle))
 
-router.route('/images')
-  .get(isAdmin, wrapAsync(admin.renderImages))
+router.route('/configHome')
+  .get(isAdmin, wrapAsync(admin.renderConfigHome))
 
 router.route('/contact')
   .get(isAdmin, wrapAsync(admin.renderContact))
