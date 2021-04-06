@@ -32,7 +32,7 @@ const cartRoutes = require('./routes/cart');
 
 
 //process.env.DB_URL 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/ecomm-store'; 
+const dbUrl = 'mongodb://localhost:27017/ecomm-store'; 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
