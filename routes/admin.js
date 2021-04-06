@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-const passport = require('passport');
 const wrapAsync = require('../utils/wrapAsync');
 const { isAdmin } = require('../middleware')
 const admin = require('../controllers/admin')
+const multer = require("multer");
+const { storage } = require('../cloudinary/index')
+const upload = multer({ storage });
 
 router.get('/', isAdmin, admin.renderHome)
 
@@ -17,6 +19,7 @@ router.route('/title')
 
 router.route('/configHome')
   .get(isAdmin, wrapAsync(admin.renderConfigHome))
+  .put(isAdmin, upload.single('backgroundImage'), wrapAsync(admin.updateConfigHome))
 
 router.route('/contact')
   .get(isAdmin, wrapAsync(admin.renderContact))

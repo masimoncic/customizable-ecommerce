@@ -17,7 +17,10 @@ const AdminSettingSchema = new mongoose.Schema({
   homePage: {
     heading: String,
     description: String,
-    backgroundImage: String,
+    backgroundImage: {
+      url: String,
+      filename: String,
+    },
   },
   tax: Number,
   shippingFlat: Number,

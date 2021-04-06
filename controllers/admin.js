@@ -1,6 +1,6 @@
 const AdminSettings = require('../models/adminSettings');
 const methodOverride = require('method-override');
-
+const { cloudinary } = require('../cloudinary');
 
 module.exports.renderHome = async (req, res) => {
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
@@ -45,6 +45,15 @@ module.exports.renderConfigHome = async(req, res) => {
   const adminSettings = await AdminSettings.findOne({ 'name' : 'adminSettings' })
   const homePage = adminSettings.homePage;
   res.render('admin/configHome', { homePage })
+}
+
+module.exports.updateConfigHome = async(req, res) => {
+  // missing field: public_id
+  //await cloudinary.uploader.destroy(adminSettings.homePage.backgroundImage.filename)
+  const adminSettings = await AdminSettings.findOneAndUpdate({ 'name' : 'adminSettings' }, {'homePage' : {'heading': req.body.heading, 'description': req.body.description, 'backgroundImage': {'url': req.file.path.replace('/upload', '/upload/c_scale,h_720,w_1080'), 'filename': req.file.filename}}})
+  adminSettings.save();
+  console.log(adminSettings)
+  res.redirect('configHome');
 }
 
 module.exports.renderContact = async(req, res) => {

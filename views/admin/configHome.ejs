@@ -2,13 +2,8 @@
 
 <h1 class="text-center">configure homepage</h1>
 
-<%= homePage.heading %>
-<%= homePage.description %>
-<%= homePage.backgroundImage %>
-
-
 <div class="mt-5 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
-  <form action="/admin/contact?_method=PUT" method="POST">
+  <form action="/admin/configHome?_method=PUT" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="heading" class="form-label">Heading</label>
       <input class="form-control" type="text" name="heading" id="heading" value="<%=homePage.heading%>">
@@ -19,7 +14,7 @@
     </div>
     <div class="mb-3">
       <label for="backgroundImage" class="form-label">Backgorund Image</label>
-      <input class="form-control" type="text" name="backgroundImage" id="backgroundImage" value="<%=homePage.backgroundImage%>">
+      <input type="file" name="backgroundImage" id="backgroundImage">
     </div>
     <button class="btn btn-primary">Submit</button>
   </form>
