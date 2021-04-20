@@ -1,5 +1,4 @@
 if(process.env.NODE_ENV !== "production") {
-  console.log('not production');
     require('dotenv').config();
   }
 
@@ -13,7 +12,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const Joi = require('joi');
 const helmet = require('helmet');
 
 const User = require('./models/users')
@@ -29,10 +27,10 @@ const reviewRoutes = require('./routes/reviews')
 const cartRoutes = require('./routes/cart');
 
 
+//'mongodb://localhost:27017/ecomm-store'
 
 
-//process.env.DB_URL 
-const dbUrl = 'mongodb://localhost:27017/ecomm-store'; 
+const dbUrl = process.env.DB_URL; 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
